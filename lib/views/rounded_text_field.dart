@@ -1,16 +1,19 @@
 // ignore: file_names
 import 'package:flutter/material.dart';
+import 'package:learningdart/app_theme.dart';
 
 class RoundedTextField extends StatefulWidget {
   final ValueChanged<String?>? onTextChanged;
   final String hintText;
   final bool isPassword;
+  final MyColors colors;
 
   const RoundedTextField({
     Key? key,
     this.onTextChanged,
     this.hintText = '',
     this.isPassword = false,
+    required this.colors,
   }) : super(key: key);
 
   @override
@@ -23,25 +26,25 @@ class _MyWidgetState extends State<RoundedTextField> {
     return TextField(
         obscureText: widget.isPassword,
         decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20.0),
               ),
-              borderSide: BorderSide(color: Color(0xFFECF1F6), width: 1),
+              borderSide: BorderSide(color: widget.colors.grey, width: 1),
             ),
-            focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20.0),
               ),
-              borderSide: BorderSide(color: Color(0xFFECF1F6), width: 1),
+              borderSide: BorderSide(color: widget.colors.grey, width: 1),
             ),
-            border: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(
                 Radius.circular(20.0),
               ),
-              borderSide: BorderSide(color: Color(0xFFECF1F6), width: 1),
+              borderSide: BorderSide(color: widget.colors.grey, width: 1),
             ),
             hintText: widget.hintText),
-        onChanged: (text) => widget.onTextChanged!(text));
+        onChanged: (text) => widget.onTextChanged != null ? (text) : () {});
   }
 }

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:learningdart/app_theme.dart';
+import "package:sizer/sizer.dart";
 
 class LabeledCheckbox extends StatefulWidget {
   final bool? value;
   final String label;
   final bool leadingCheckbox;
   final ValueChanged<bool?>? onChanged;
+  final MyTextStyles textStyles;
 
   const LabeledCheckbox({
     Key? key,
@@ -12,6 +15,7 @@ class LabeledCheckbox extends StatefulWidget {
     this.onChanged,
     this.label = '',
     this.leadingCheckbox = true,
+    required this.textStyles,
   }) : super(key: key);
 
   @override
@@ -58,12 +62,12 @@ class _LabeledCheckboxState extends State<LabeledCheckbox> {
 
   Widget _buildLabel(BuildContext context) {
     var padding = widget.leadingCheckbox
-        ? const EdgeInsets.only(right: 8)
-        : const EdgeInsets.only(left: 8);
+        ? EdgeInsets.only(right: 8.w)
+        : EdgeInsets.only(left: 8.w);
 
     return Padding(
       padding: padding,
-      child: Text(widget.label, style: const TextStyle(fontSize: 18)),
+      child: Text(widget.label, style: widget.textStyles.defaultText),
     );
   }
 

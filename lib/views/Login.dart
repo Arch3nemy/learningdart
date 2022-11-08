@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:learningdart/views/LabeledCheckBox.dart';
-import 'package:learningdart/views/RoundedTextField.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:learningdart/views/labeled_check_box.dart';
+import 'package:learningdart/views/rounded_text_field.dart';
 import 'package:sizer/sizer.dart';
 import 'package:learningdart/constants.dart' as constants;
+import 'package:learningdart/app_theme.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  final MyTextStyles textStyles;
+  final MyColors colors;
+
+  const Login({super.key, required this.textStyles, required this.colors});
 
   @override
   State<Login> createState() => _MyWidgetState();
@@ -25,51 +30,60 @@ class _MyWidgetState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(spacing: 2.w, runSpacing: 2.w, children: [
-      const Text(constants.EMAIL,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-      RoundedTextField(
+    return Wrap(
+      spacing: 2.w,
+      runSpacing: 2.w,
+      children: [
+        Text(constants.EMAIL,
+            style: widget.textStyles.defaultText
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        RoundedTextField(
           onTextChanged: (text) => _updateEmail(text),
-          hintText: constants.ENTER_EMAIL),
-      const Text(constants.PASSWORD,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-      RoundedTextField(
+          hintText: constants.ENTER_EMAIL,
+          colors: widget.colors,
+        ),
+        Text(constants.PASSWORD,
+            style: widget.textStyles.defaultText
+                ?.copyWith(fontWeight: FontWeight.bold)),
+        RoundedTextField(
           onTextChanged: (text) => _updatePassword(text),
-          hintText: constants.ENTER_PASSWORD),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const LabeledCheckbox(
-            label: constants.REMEMBER_ME,
-          ),
-          GestureDetector(
-            onTap: null,
-            child: const Text(constants.FORGOT_PASSWORD,
-                style: TextStyle(fontSize: 18, color: Colors.red)),
-          )
-        ],
-      ),
-      SizedBox(height: 1.w),
-      Material(
-        color: const Color(0xFF980000),
-        borderRadius: BorderRadius.circular(25),
-        child: InkWell(
-          onTap: () {},
-          borderRadius: BorderRadius.circular(35),
-          child: Container(
-            height: 15.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
+          hintText: constants.ENTER_PASSWORD,
+          colors: widget.colors,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            LabeledCheckbox(
+              label: constants.REMEMBER_ME,
+              textStyles: widget.textStyles,
             ),
-            alignment: Alignment.center,
-            child: const Text(constants.SIGN_IN,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white)),
+            GestureDetector(
+              onTap: null,
+              child: Text(constants.FORGOT_PASSWORD,
+                  style: widget.textStyles.defaultText
+                      ?.copyWith(color: widget.colors.lightRed)),
+            )
+          ],
+        ),
+        SizedBox(height: 1.w),
+        Material(
+          color: widget.colors.colorAccent,
+          borderRadius: BorderRadius.circular(25),
+          child: InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(35),
+            child: Container(
+              height: 15.w,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+              ),
+              alignment: Alignment.center,
+              child:
+                  Text(constants.SIGN_IN, style: widget.textStyles.loginButton),
+            ),
           ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }
